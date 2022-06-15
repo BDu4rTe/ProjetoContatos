@@ -1,15 +1,30 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
-    return render(request, 'contas/login.html')
+    if request.method != 'POST':
+        return render(request, 'contas/login.html')
+
+    usuario = request.POST.get('usuario')
+    senha = request.POST.get('senha')
+    user = auth.authenticate(request, username=usuario, password=senha)
+
+    if not user:
+        messages.error(request, 'Usuario ou senha invalidos')
+        return render(request, 'contas/login.html')
+    else:
+        auth.login(request, user)
+        messages.success(request, 'Logado com sucesso!')
+        return redirect('adm')
 
 
 def logout(request):
-    return render(request, 'contas/logout.html')
+    auth.logout(request)
+    redirect('login')
 
 
 def register(request):
@@ -65,5 +80,6 @@ def register(request):
     return redirect('login')
 
 
+@login_required(redirect_field_name='login')
 def adm(request):
     return render(request, 'contas/adm.html')
