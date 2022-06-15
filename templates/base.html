@@ -12,8 +12,9 @@
     <!-- Conteudo -->
     <div class="container">
         <div class="row">
-            <br class="col-lg-12">
-            <!-- Campo de busca -->
+            <div class="col-lg-12">
+            {% if 'contas' not in request.path %}
+                <!-- Campo de busca -->
                 <br><br>
                 <form method="get" action="{% url 'busca' %}">
                     <div class="form-group row">
@@ -25,7 +26,9 @@
                                     name="termo">
                         </div>
                     </div>
+                    {% include 'parciais/_msg.html' %}
                 </form>
+            {% endif %}    
                 {%block conteudo%} {%endblock%}
             </div>
         </div>
