@@ -1,4 +1,3 @@
-:construction: Projeto em desenvolvimento !! :construction:
 
 ## Resumo
 <p>Um projeto simples para eu poder colocar o conhecimento que venho adiquirindo em django.</p>
