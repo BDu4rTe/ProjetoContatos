@@ -25,7 +25,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    redirect('login')
+    return redirect('login')
 
 
 def register(request):
@@ -91,7 +91,6 @@ def adm(request):
 
     if not form.is_valid():
         messages.error(request, 'Erro ao enviar formulario')
-        # ^melhorar essa message
         form = FormContato(request.POST)
         return render(request, 'contas/adm.html', {'form': form})
 
